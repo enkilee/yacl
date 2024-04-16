@@ -14,11 +14,17 @@
 
 workspace(name = "yacl")
 
-load("//bazel:repositories.bzl", "yacl_deps")
+load("//bazel:repositories.bzl", "yacl_deps",)
 
 yacl_deps()
 
-load("@rules_python//python:repositories.bzl", "py_repositories")
+load("@rules_python//python:repositories.bzl", "py_repositories",)
+
+load(
+    "@bazel_tools//tools/build_defs/repo:git.bzl",
+    "git_repository",
+    "new_git_repository",
+)
 
 py_repositories()
 
@@ -36,3 +42,12 @@ rules_foreign_cc_dependencies(
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
+
+## Microsoft FourQ
+# Would be nice to use Microsoft FourQ instead here.
+new_git_repository(
+    name = "FourQlib",
+    build_file = "@com_microsoft_FourQlib//:third_party/FourQlib.BUILD",
+    commit = "1031567f23278e1135b35cc04e5d74c2ac88c029",
+    remote = "https://github.com/microsoft/FourQlib.git",
+)
